@@ -72,27 +72,27 @@ interface ForecastData {
   };
 }
 
-export default function WeatherPage() {  
+export default function WeatherPage() {
   const [cities, setCities] = useState<WeatherData[]>([]);
   const [forecasts, setForecasts] = useState<{ [key: string]: ForecastData[] }>({});
   const [newCity, setNewCity] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [selectedCity, setSelectedCity] = useState<string | null>(null);  
+  const [selectedCity, setSelectedCity] = useState<string | null>(null);
   const [searchResults, setSearchResults] = useState<WeatherData | null>(null);
   const [airQuality, setAirQuality] = useState<any>(null);
   const [searchHistory, setSearchHistory] = useState<string[]>([]);
   const [uvIndex, setUvIndex] = useState<any>(null);
   const [alerts, setAlerts] = useState<any[]>([]);
   const [hourlyForecast, setHourlyForecast] = useState<any[]>([]);
-  const [mapView, setMapView] = useState<boolean>(false);  
+  const [mapView, setMapView] = useState<boolean>(false);
 
   const fetchWeatherData = async (city: string, isSearch: boolean = false) => {
     try {
       setError(null);
       setLoading(true);
       const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
-      
+
       if (!apiKey) {
         throw new Error('Weather API key is not configured');
       }
@@ -101,12 +101,12 @@ export default function WeatherPage() {
       const response = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=${encodedCity}&appid=${apiKey}&units=metric`
       );
-      
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || 'City not found. Please check the spelling and try again.');
       }
-      
+
       const data = await response.json();
 
       // If it's a search, fetch additional data
@@ -118,11 +118,11 @@ export default function WeatherPage() {
           // Forecast data
           fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`)
             .then(res => res.json()),
-          
+
           // Air quality data
           fetch(`https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`)
             .then(res => res.json()),
-          
+
           // One Call API for detailed data
           fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&exclude=minutely`)
             .then(res => res.json())
@@ -165,7 +165,7 @@ export default function WeatherPage() {
         const forecastResponse = await fetch(
           `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`
         );
-        
+
         if (forecastResponse.ok) {
           const forecastData = await forecastResponse.json();
           setForecasts(prev => ({
@@ -175,10 +175,11 @@ export default function WeatherPage() {
         }
       }
 
-      return data;    } catch (error: any) {
+      return data;
+    } catch (error: any) {
       console.error('Error fetching weather:', error);
       let errorMessage = 'An error occurred while fetching weather data.';
-      
+
       if (error.message.includes('Invalid API key') || error.message.includes('401')) {
         errorMessage = 'The weather service API key is not active yet. New API keys typically take 2-4 hours to activate. Please try again later or use a different API key.';
       } else if (error.message.includes('API key')) {
@@ -188,7 +189,7 @@ export default function WeatherPage() {
       } else if (error.message.includes('Nothing to geocode')) {
         errorMessage = 'Please enter a city name.';
       }
-      
+
       setError(errorMessage);
       setSearchResults(null);
       setAirQuality(null);
@@ -227,10 +228,10 @@ export default function WeatherPage() {
   const getWindDirection = (deg: number) => {
     const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
     return directions[Math.round(deg / 45) % 8];
-  };  const handleSearchCity = async (e: React.FormEvent) => {
+  }; const handleSearchCity = async (e: React.FormEvent) => {
     e.preventDefault();
     const cityInput = newCity.trim();
-    
+
     if (!cityInput) {
       setError('Please enter a city name.');
       return;
@@ -252,7 +253,7 @@ export default function WeatherPage() {
     if (!cityName.trim()) return;
 
     const weatherData = await fetchWeatherData(cityName);
-    
+
     if (weatherData) {
       setCities(prev => {
         // Check if city already exists
@@ -283,7 +284,7 @@ export default function WeatherPage() {
     return (
       <div className="relative w-24 h-24">
         <div className="absolute inset-0 flex items-center justify-center">
-          <div 
+          <div
             className="w-1 h-12 bg-primary origin-bottom transform transition-transform"
             style={{ transform: `rotate(${degrees}deg)` }}
           />
@@ -303,10 +304,11 @@ export default function WeatherPage() {
       </div>
     );
   };
-  
+
   return (
     <div className="container mx-auto p-6 min-h-screen bg-gradient-to-b from-background to-background/80">
-      <h1 className="text-4xl font-bold mb-8 text-center text-gradient">Local Weather</h1>      <div className="max-w-4xl mx-auto mb-8">
+      <h1 className="text-4xl font-bold mb-8 text-center text-gradient">Want to know Local Weather?</h1>
+      <div className="max-w-4xl mx-auto mb-8">
         <form onSubmit={handleSearchCity} className="flex gap-4">
           <Input
             type="text"
@@ -318,9 +320,9 @@ export default function WeatherPage() {
             placeholder="Enter city name (e.g., London, Paris, Tokyo)"
             className={`flex-1 ${error ? 'border-red-500 focus:ring-red-500' : ''}`}
           />
-          <Button 
-            type="submit" 
-            disabled={loading || !newCity.trim()} 
+          <Button
+            type="submit"
+            disabled={loading || !newCity.trim()}
             className="min-w-[100px]"
           >
             {loading ? (
@@ -387,8 +389,8 @@ export default function WeatherPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-6">
                     <div className="flex items-center">
-                      <img 
-                        src={getWeatherIcon(searchResults.weather[0].icon)} 
+                      <img
+                        src={getWeatherIcon(searchResults.weather[0].icon)}
                         alt={searchResults.weather[0].description}
                         className="w-20 h-20"
                       />
@@ -524,8 +526,8 @@ export default function WeatherPage() {
                         </div>
                         <div className="text-sm text-muted-foreground">
                           {uvIndex <= 2 ? 'No protection required' :
-                           uvIndex <= 5 ? 'Protection required' :
-                           'Extra protection required'}
+                            uvIndex <= 5 ? 'Protection required' :
+                              'Extra protection required'}
                         </div>
                       </div>
                     </div>
@@ -538,26 +540,26 @@ export default function WeatherPage() {
                         <ResponsiveContainer width="100%" height="100%">
                           <LineChart data={hourlyForecast}>
                             <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis 
-                              dataKey="dt" 
+                            <XAxis
+                              dataKey="dt"
                               tickFormatter={(value) => formatTime(value)}
                             />
                             <YAxis />
-                            <Tooltip 
+                            <Tooltip
                               labelFormatter={(value) => formatTime(value)}
                               formatter={(value: number) => [`${Math.round(value)}°C`]}
                             />
-                            <Line 
-                              type="monotone" 
-                              dataKey="temp" 
-                              stroke="#3b82f6" 
-                              activeDot={{ r: 8 }} 
+                            <Line
+                              type="monotone"
+                              dataKey="temp"
+                              stroke="#3b82f6"
+                              activeDot={{ r: 8 }}
                               name="Temperature"
                             />
-                            <Line 
-                              type="monotone" 
-                              dataKey="pop" 
-                              stroke="#22c55e" 
+                            <Line
+                              type="monotone"
+                              dataKey="pop"
+                              stroke="#22c55e"
                               activeDot={{ r: 8 }}
                               yAxisId={1}
                               name="Precipitation"
@@ -573,8 +575,8 @@ export default function WeatherPage() {
                               <div className="text-sm text-muted-foreground">
                                 {formatTime(hour.dt)}
                               </div>
-                              <img 
-                                src={getWeatherIcon(hour.weather[0].icon)} 
+                              <img
+                                src={getWeatherIcon(hour.weather[0].icon)}
                                 alt={hour.weather[0].description}
                                 className="w-8 h-8"
                               />
@@ -607,15 +609,15 @@ export default function WeatherPage() {
                 transition={{ duration: 0.2 }}
               >
                 <Card className="p-6 backdrop-blur-md bg-card/30 border border-border/50 relative group hover:shadow-lg transition-all">
-                  <Button 
-                    variant="ghost" 
+                  <Button
+                    variant="ghost"
                     size="icon"
                     className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
                     onClick={() => removeCity(city.name)}
                   >
                     ×
                   </Button>
-                  
+
                   <Tabs defaultValue="current" className="space-y-4">
                     <TabsList className="grid w-full grid-cols-2">
                       <TabsTrigger value="current">Current</TabsTrigger>
@@ -628,8 +630,8 @@ export default function WeatherPage() {
                           <h2 className="text-2xl font-semibold">{city.name}</h2>
                           <span className="text-sm text-muted-foreground">{city.sys.country}</span>
                         </div>
-                        <img 
-                          src={getWeatherIcon(city.weather[0].icon)} 
+                        <img
+                          src={getWeatherIcon(city.weather[0].icon)}
                           alt={city.weather[0].description}
                           className="w-16 h-16"
                         />
@@ -706,20 +708,20 @@ export default function WeatherPage() {
                           <ResponsiveContainer width="100%" height="100%">
                             <LineChart data={forecasts[city.name]}>
                               <CartesianGrid strokeDasharray="3 3" />
-                              <XAxis 
-                                dataKey="dt" 
+                              <XAxis
+                                dataKey="dt"
                                 tickFormatter={(value) => formatTime(value)}
                               />
                               <YAxis />
-                              <Tooltip 
+                              <Tooltip
                                 labelFormatter={(value) => formatTime(value)}
                                 formatter={(value: number) => [`${Math.round(value)}°C`]}
                               />
-                              <Line 
-                                type="monotone" 
-                                dataKey="main.temp" 
-                                stroke="#3b82f6" 
-                                activeDot={{ r: 8 }} 
+                              <Line
+                                type="monotone"
+                                dataKey="main.temp"
+                                stroke="#3b82f6"
+                                activeDot={{ r: 8 }}
                               />
                             </LineChart>
                           </ResponsiveContainer>
@@ -731,8 +733,8 @@ export default function WeatherPage() {
                             <div className="text-sm text-muted-foreground">
                               {formatTime(forecast.dt)}
                             </div>
-                            <img 
-                              src={getWeatherIcon(forecast.weather[0].icon)} 
+                            <img
+                              src={getWeatherIcon(forecast.weather[0].icon)}
                               alt={forecast.weather[0].description}
                               className="w-8 h-8 mx-auto"
                             />

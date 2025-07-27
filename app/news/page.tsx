@@ -531,7 +531,7 @@ export default function NewsPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <h2 className="text-lg font-medium mb-4 text-center cursor-pointer">Browse Categories</h2>
+          <h2 className="text-lg font-medium mb-4 text-center cursor-default underline">Browse Categories</h2>
           <div className="flex justify-center overflow-x-auto py-2 hide-scrollbar">
             <div className="flex space-x-2 pb-2">
           {categories.map((category) => (

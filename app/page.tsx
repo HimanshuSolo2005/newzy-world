@@ -604,7 +604,7 @@ export default function Home() {
             </p>
             <Button 
               size="lg" 
-              className="text-lg px-8 bg-primary hover:bg-primary/90 text-white flex items-center group mx-auto"
+              className="text-lg px-8 bg-primary hover:bg-primary/90 text-white flex items-center group mx-auto rounded-full"
               onClick={navigateToNews}
             >
               Get Started
@@ -622,11 +622,11 @@ export default function Home() {
               <Badge className="mb-4 px-3 py-1 text-sm font-medium bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-800 cursor-default">
                 Top Stories
               </Badge>
-              <h2 className="text-3xl font-bold ">Today's Headlines</h2>
+              <h2 className="text-3xl font-semibold text-sky-500 underline cursor-default">Today's Headlines</h2>
             </div>
             <Button
               variant="destructive"
-              className="mt-4 md:mt-0"
+              className="mt-4 md:mt-0 rounded-full"
               onClick={navigateToNews}
             >
               View All News
@@ -684,10 +684,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Weather and Features Section - Update background to be consistent */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-muted/50 dark:bg-background">
         <div className="max-w-7xl mx-auto">
-          {/* Weather Widget - Now above features */}
           <div className="mb-12">
             <div className="text-center">
               <Badge className="mb-4 px-3 py-1 text-sm font-medium bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400 hover:bg-green-200 dark:hover:bg-blue-800 cursor-default">
@@ -701,7 +699,6 @@ export default function Home() {
             </div>
           </div>
           
-          {/* Traffic Map Widget */}
           <div className="mb-12">
             <div className="text-center">
               <Badge className="mb-4 px-3 py-1 text-sm font-medium bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-800 cursor-default">
@@ -715,7 +712,6 @@ export default function Home() {
             </div>
           </div>
           
-          {/* Features */}
           <motion.div 
             initial="hidden"
             whileInView="visible"
@@ -791,7 +787,7 @@ export default function Home() {
           </p>
           <Button 
             size="lg" 
-            className="text-lg px-8 bg-primary hover:bg-primary/90 text-yellow-100 flex items-center mx-auto group"
+            className="text-lg px-8 bg-primary hover:bg-primary/90 text-yellow-100 flex items-center mx-auto group rounded-full"
             onClick={navigateToNews}
           >
             Browse News
@@ -851,20 +847,15 @@ export default function Home() {
               </ul>
             </div>
             <div>
-              <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
+              <h3 className="text-lg font-semibold mb-4">Follow Me</h3>
               <ul className="space-y-2">
                 <li>
-                  <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                    Twitter
+                  <a href="https://www.linkedin.com/in/himanshuverma192005/" className="text-muted-foreground hover:text-primary transition-colors">
+                    Linkedin
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                    Facebook
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                  <a href="https://www.instagram.com/himanshu._.verma2005/" className="text-muted-foreground hover:text-primary transition-colors">
                     Instagram
                   </a>
                 </li>
@@ -873,12 +864,12 @@ export default function Home() {
             <div>
               <h3 className="text-lg font-semibold mb-4">Contact</h3>
               <p className="text-muted-foreground">
-                Have questions? Reach out to us at support@ainewshub.com
+                Have questions? Reach out to me at himslash2005@gmail.com
               </p>
             </div>
           </div>
           <div className="mt-8 pt-8 border-t text-center text-muted-foreground">
-            <p>&copy; {new Date().getFullYear()} AI NEWS HUB. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} Newzy World. All rights reserved.</p>
           </div>
         </div>
       </footer>

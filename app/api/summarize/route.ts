@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
         'Authorization': `Bearer ${GROQ_API_KEY}`,
       },
       body: JSON.stringify({
-        model: 'llama3-8b-8192',  // Using Llama3 8b model for good balance of quality and speed
+        model: 'llama3-8b-8192', 
         messages: [
           {
             role: 'system',
