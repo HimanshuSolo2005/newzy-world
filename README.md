@@ -44,7 +44,7 @@ Newzy World is a modern news aggregation and summarization platform powered by A
 - **Backend**: Next.js API Routes, MongoDB with Mongoose
 - **Authentication**: NextAuth.js with OAuth providers
 - **External APIs**: NewsAPI, GROQ AI API for summarization, Weather API, Google Maps API
-- **UI Components**: Shadcn UI for consistent design
+- **UI Components**: Shadcn UI and React Bits for consistent design
 
 ## 🚀 Features
 
