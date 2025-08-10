@@ -1,5 +1,7 @@
 "use client";
 
+import DotGrid from "@/components/Backgrounds/DotGrid/DotGrid";
+import { useTheme } from "next-themes";
 import React, { useEffect, useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -28,46 +30,13 @@ import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import Carousel from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { GoogleMap, LoadScript, TrafficLayer, Marker } from '@react-google-maps/api';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 // Mock news data for carousel
-const topNewsArticles = [
-  {
-    id: 1,
-    title: "AI Makes Breakthrough in Protein Folding Research",
-    summary: "Scientists using artificial intelligence have made a significant leap forward in understanding protein structures, potentially revolutionizing drug development.",
-    image: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?q=80&w=1000&auto=format&fit=crop",
-    category: "Technology",
-    date: "2 hours ago"
-  },
-  {
-    id: 2,
-    title: "Global Climate Summit Reaches Historic Agreement",
-    summary: "World leaders have agreed to an unprecedented pact aimed at limiting global warming to 1.5°C, with binding commitments for emissions reductions.",
-    image: "https://images.unsplash.com/photo-1553901753-215db344677a?q=80&w=1000&auto=format&fit=crop",
-    category: "Environment",
-    date: "4 hours ago"
-  },
-  {
-    id: 3,
-    title: "Space Exploration Company Announces Lunar Base Plans",
-    summary: "A private aerospace company has unveiled plans to establish the first permanent human settlement on the Moon by 2030, with construction beginning as early as 2027.",
-    image: "https://images.unsplash.com/photo-1454789548928-9efd52dc4031?q=80&w=1000&auto=format&fit=crop",
-    category: "Space",
-    date: "6 hours ago"
-  },
-  {
-    id: 4,
-    title: "Major Breakthrough in Quantum Computing Announced",
-    summary: "Researchers have demonstrated quantum supremacy in a new processor that solves problems impossible for traditional computers, marking a milestone in computing.",
-    image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1000&auto=format&fit=crop",
-    category: "Technology",
-    date: "8 hours ago"
-  }
-];
+
 
 // Weather icon mapping
 const weatherIcons: {[key: string]: React.ReactNode} = {
@@ -551,11 +520,36 @@ const MapComponent = () => {
   );
 };
 
+const slideData  = [
+  {
+    title: "OpenAI launches its latest flagship model GPT-5.",
+    src: "https://www.zdnet.com/a/img/resize/f730ae9ef6bb8121467b965f4d19f99c30395df4/2025/08/07/cbf00d7a-4ca2-4899-a620-5d996308ee68/gpt-5-flagship-hero.png?auto=webp&fit=crop&height=1200&width=1200",
+    button: "Technology"
+  },
+  {
+    title: "OpenAI releases two open-weight AI reasoning models optimized for personal computers.",
+    src: "https://fireworks.ai/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fpv37i0yn%2Fproduction%2F358dab50acd43631870b847b4347df7191d02eac-2160x1244.png%3Fauto%3Dformat&w=3840&q=75",
+    button: "Environment",
+  },
+  {
+    title: "Space Exploration Company Announces Lunar Base Plans",
+    src: "https://images.unsplash.com/photo-1454789548928-9efd52dc4031?q=80&w=1000&auto=format&fit=crop",
+    button: "Space",
+  },
+  {
+    title: "Major Breakthrough in Quantum Computing Announced.",
+    src: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1000&auto=format&fit=crop",
+    button: "Technology",
+  }
+];
+
+
 export default function Home() {
   const router = useRouter();
   const plugin = React.useRef(
     Autoplay({ delay: 4000, stopOnInteraction: true }) as any
   );
+  const { theme } = useTheme();
 
   const navigateToNews = () => {
     router.push('/news');
@@ -582,8 +576,22 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-background">
+
       {/* Hero Section - Update background to match navbar */}
-      <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-background">
+  <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-orange-800 dark:bg-neutral-950">
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <DotGrid
+            dotSize={10}
+            gap={15}
+            baseColor="#0D0C0D"
+            activeColor= "#11A8E8"
+            proximity={120}
+            shockRadius={250}
+            shockStrength={5}
+            resistance={750}
+            returnDuration={1.5}
+          />
+        </div>
         <div className="absolute inset-0 z-0 bg-gradient-to-br from-primary/5 to-accent/5 dark:from-background dark:to-background dark:bg-opacity-100"></div>
         <motion.div 
           className="max-w-7xl mx-auto relative z-10"
@@ -592,13 +600,13 @@ export default function Home() {
           variants={fadeIn}
         >
           <div className="text-center">
-            <Badge className="mb-6 px-4 py-2 text-sm font-medium bg-primary/10 text-primary dark:bg-primary/20">
+            <Badge className="mb-6 px-4 py-2 text-sm font-medium bg-primary/10 text-white dark:bg-primary/20">
               Powered by AI
             </Badge>
-            <h1 className="text-4xl sm:text-6xl font-bold text-foreground mb-6">
-              Stay Informed with <span className="text-primary">AI-Powered</span> News
+            <h1 className="text-4xl sm:text-6xl font-bold text-white mb-6 cursor-default">
+              Stay Informed with <span className="text-cyan-400 cursor-default">AI-Powered</span> News
             </h1>
-            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+            <p className="text-xl text-white mb-8 max-w-2xl mx-auto cursor-default">
               Get personalized news summaries, real-time updates, and local information
               all in one place.
             </p>
@@ -634,53 +642,9 @@ export default function Home() {
             </Button>
           </div>
           
-          <Carousel 
-            className="w-full"
-            plugins={[plugin.current]}
-            opts={{
-              align: "start",
-              loop: true,
-            }}
-          >
-            <CarouselContent className="-ml-2 md:-ml-4">
-              {topNewsArticles.map((article) => (
-                <CarouselItem key={article.id} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
-                  <div className="p-1">
-                    <Card className="overflow-hidden h-full hover:shadow-md transition-all border-border hover:border-primary/30">
-                      <div className="relative h-48">
-                        <Image
-                          src={article.image}
-                          alt={article.title}
-                          fill
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          className="object-cover"
-                        />
-                        <div className="absolute top-2 left-2">
-                          <Badge className="bg-primary/90 text-white">
-                            {article.category}
-                          </Badge>
-                        </div>
-                      </div>
-                      <CardContent className="p-4">
-                        <div className="flex items-center space-x-1 mb-2">
-                          <Clock className="h-3 w-3 text-muted-foreground" />
-                          <p className="text-xs text-muted-foreground">{article.date}</p>
-                        </div>
-                        <h3 className="font-semibold line-clamp-2 mb-2">{article.title}</h3>
-                        <p className="text-sm text-muted-foreground line-clamp-3">{article.summary}</p>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <div className="flex justify-center mt-4">
-              <div className="flex space-x-2">
-                <CarouselPrevious className="static translate-y-0 left-0" />
-                <CarouselNext className="static translate-y-0 right-0" />
-              </div>
-            </div>
-          </Carousel>
+          <div className="relative overflow-hidden w-full h-full py-20">
+      <Carousel slides={slideData} />
+    </div>
         </div>
       </section>
 
